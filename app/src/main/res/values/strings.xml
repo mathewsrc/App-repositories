@@ -3,4 +3,7 @@
     <string name="action_search">Pesquisar</string>
     <string name="github">GITHUB</string>
     <string name="open_link_with">Open link with:</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="title_home">Home</string>
+    <string name="title_favorite">Favorite</string>
 </resources>

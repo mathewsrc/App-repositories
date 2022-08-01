@@ -1,15 +1,20 @@
 package br.com.dio.app.repositories.data.model
 
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
+@Entity
 data class Repo(
-    val id: Long,
+    @PrimaryKey val id: Long,
     val name: String,
-    val owner: Owner,
+    @Embedded val owner: Owner,
     @SerializedName("stargazers_count")
     val stargazersCount: Long,
     val language: String?,
     @SerializedName("html_url")
     val htmlURL: String,
-    val description: String
+    val description: String,
+    val favorite:Boolean = false
 )

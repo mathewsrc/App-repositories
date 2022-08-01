@@ -1,12 +1,15 @@
 package br.com.dio.app.repositories.data.di
 
 import android.util.Log
+import androidx.room.Room
+import br.com.dio.app.repositories.data.local.AppDatabase
 import br.com.dio.app.repositories.data.repositories.RepoRepository
 import br.com.dio.app.repositories.data.repositories.RepoRepositoryImpl
 import br.com.dio.app.repositories.data.services.GitHubService
 import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.dsl.module
@@ -18,7 +21,7 @@ object DataModule {
     private const val OK_HTTP = "OkHttp"
 
     fun load() {
-        loadKoinModules(networkModules() + repositoriesModule())
+        loadKoinModules(networkModules() + repositoriesModule() + localDbModule())
     }
 
     private fun networkModules(): Module {
@@ -46,7 +49,15 @@ object DataModule {
 
     private fun repositoriesModule(): Module {
         return module {
-            single<RepoRepository> { RepoRepositoryImpl(get()) }
+            single<RepoRepository> { RepoRepositoryImpl(get(), get()) }
+        }
+    }
+
+    private fun localDbModule():Module{
+        return module {
+            single {
+               AppDatabase.createDatabase(androidContext())
+            }
         }
     }
 
@@ -57,4 +68,5 @@ object DataModule {
             .addConverterFactory(factory)
             .build().create(T::class.java)
     }
+
 }

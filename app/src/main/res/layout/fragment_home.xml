@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.ui.home.HomeFragment">
+
+    <HorizontalScrollView
+        android:layout_width="0dp"
+        android:id="@+id/horizontal_scroll_view"
+        android:scrollbars="none"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.chip.ChipGroup
+            android:layout_width="wrap_content"
+            android:id="@+id/chip_group"
+            app:singleSelection="true"
+            app:singleLine="true"
+            android:paddingHorizontal="@dimen/layout_padding"
+            android:layout_height="wrap_content">
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:checkable="true"
+                android:id="@+id/python"
+                android:layout_height="wrap_content"/>
+
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="java"
+                android:checkable="true"
+                android:id="@+id/java"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="CSS"
+                android:id="@+id/css"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.chip.Chip
+                android:layout_width="wrap_content"
+                android:text="python"
+                android:layout_height="wrap_content"/>
+
+        </com.google.android.material.chip.ChipGroup>
+    </HorizontalScrollView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_repos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/horizontal_scroll_view"
+        tools:itemCount="5"
+        tools:listitem="@layout/item_repo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -64,5 +64,21 @@ dependencies {
 
     //glide
     implementation 'com.github.bumptech.glide:glide:4.13.2'
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.0'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.1'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.1'
+
+    // Room: https://developer.android.com/training/data-storage/room#groovy
+    def room_version = "2.4.1"
+    implementation "androidx.room:room-runtime:$room_version"
+    // Add support to coroutines
+    implementation "androidx.room:room-ktx:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+
+
+
+    // Swipe refresh layout: https://developer.android.com/jetpack/androidx/releases/swiperefreshlayout?hl=pt-br
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
 
 }
