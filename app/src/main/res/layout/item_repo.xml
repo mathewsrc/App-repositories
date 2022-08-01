@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/layout_half_padding"
             android:layout_marginTop="@dimen/layout_half_padding"
-            android:layout_marginEnd="@dimen/layout_half_padding"
+            android:layout_marginEnd="16dp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_repo_language"
             app:layout_constraintStart_toEndOf="@id/iv_owner"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="@sample/repositories.json/data/name" />
@@ -48,22 +48,47 @@
         <com.google.android.material.chip.Chip
             android:id="@+id/chip_star"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
+            android:layout_height="wrap_content"
             app:chipBackgroundColor="@color/white"
             app:chipIcon="@drawable/ic_stars"
             app:chipIconTint="#FAFA02"
             app:layout_constraintStart_toStartOf="@id/tv_repo_name"
-            app:layout_constraintTop_toBottomOf="@id/tv_repo_description"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repo_language"
             tools:text="@sample/repositories.json/data/stargazers_count" />
+
+        <ImageView
+            android:id="@+id/iv_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/layout_padding"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_share_24"
+            app:layout_constraintBottom_toBottomOf="@+id/chip_star"
+            app:layout_constraintStart_toEndOf="@+id/chip_star"
+            app:layout_constraintTop_toTopOf="@+id/chip_star" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_open_link"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:text="@string/github"
+            app:layout_constraintBottom_toBottomOf="@+id/chip_star"
+            app:layout_constraintStart_toEndOf="@+id/iv_share"
+            app:layout_constraintTop_toTopOf="@+id/chip_star" />
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/tv_repo_language"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:ellipsize="end"
             android:maxLines="2"
-            app:layout_constraintEnd_toEndOf="@id/tv_repo_name"
-            app:layout_constraintTop_toTopOf="@id/chip_star"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_repo_description"
             tools:text="@sample/repositories.json/data/language" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
