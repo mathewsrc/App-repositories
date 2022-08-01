@@ -17,7 +17,12 @@ import br.com.dio.app.repositories.databinding.ItemRepoBinding
 import com.bumptech.glide.Glide
 import java.util.*
 
-class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallback()) {
+class RepoListAdapter(private val onFavorite:(Repo) -> Unit) : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallback()) {
+
+    private val backgroundColor by lazy {
+        val rnd = Random()
+        Color.argb(155, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -26,14 +31,14 @@ class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallba
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(getItem(position))
+        holder.bind(getItem(position), position)
     }
 
     inner class ViewHolder(
         private val binding: ItemRepoBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(item: Repo) {
+        fun bind(item: Repo, position: Int) {
             val context = binding.root.context
             binding.tvRepoName.text = item.name
             binding.tvRepoDescription.text = item.description
@@ -41,14 +46,21 @@ class RepoListAdapter : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallba
             binding.tvRepoLanguage.apply {
                 item.language?.let {  language ->
                     val string = SpannableString(language).apply {
-                        val rnd = Random()
-                        val backgroundColor = Color.argb(155, rnd.nextInt(256), rnd.nextInt(256), rnd.nextInt(256))
-                        setSpan(BackgroundColorSpan(backgroundColor), 0, language.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                       setSpan(BackgroundColorSpan(backgroundColor), 0, language.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
                     }
                     text = string
                 }
             }
-            item.language
+            binding.ivFavorite.setOnClickListener {
+                item.favorite = !item.favorite
+                onFavorite(item)
+                notifyItemChanged(position)
+            }
+            val favoriteColor: Int = if (item.favorite) R.color.favorite_active else R.color.favorite_inactive
+
+            binding.ivFavorite.setColorFilter(
+                context.resources.getColor(favoriteColor, context.theme)
+            )
 
             binding.btnOpenLink.setOnClickListener {
                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.htmlURL))

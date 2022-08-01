@@ -13,10 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AppRepositories">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_main2" />
-        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>

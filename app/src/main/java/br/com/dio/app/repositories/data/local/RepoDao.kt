@@ -7,12 +7,12 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface RepoDao {
 
-//    @Insert(onConflict = OnConflictStrategy.REPLACE)
-//    suspend fun save(repo: Repo)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun save(repo: Repo)
 
     @Query("SELECT * FROM repo WHERE favorite = 1")
     fun getAll():Flow<List<Repo>>
 
-//    @Delete
-//    suspend fun delete(repo: Repo)
+    @Delete
+    suspend fun delete(repo: Repo)
 }

@@ -12,4 +12,12 @@ class ListUserRepositoriesUseCase(
     override suspend fun execute(param: String): Flow<List<Repo>> {
         return repository.listRepositories(param)
     }
+
+    suspend fun save(repo: Repo){
+        repository.save(repo)
+    }
+
+    suspend fun delete(repo: Repo){
+        repository.save(repo)
+    }
 }

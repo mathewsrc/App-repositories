@@ -16,5 +16,5 @@ data class Repo(
     @SerializedName("html_url")
     val htmlURL: String,
     val description: String,
-    val favorite:Boolean = false
+    var favorite:Boolean = false
 )

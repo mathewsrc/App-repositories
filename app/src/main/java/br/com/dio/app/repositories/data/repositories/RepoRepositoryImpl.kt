@@ -24,10 +24,10 @@ class RepoRepositoryImpl(private val service: GitHubService, private val appData
     }
 
     override suspend fun save(repo: Repo) {
-        //appDatabase.repoDao().save(repo)
+        appDatabase.repoDao().save(repo)
     }
 
     override suspend fun delete(repo: Repo) {
-        //appDatabase.repoDao().delete(repo)
+        appDatabase.repoDao().delete(repo)
     }
 }

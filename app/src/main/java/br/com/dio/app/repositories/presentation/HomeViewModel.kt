@@ -1,5 +1,6 @@
 package br.com.dio.app.repositories.presentation
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -32,9 +33,33 @@ class HomeViewModel(
         }
     }
 
+    fun save(repo: Repo){
+        viewModelScope.launch {
+            try {
+                listUserRepositoriesUseCase.save(repo)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error to save item to database")
+            }
+        }
+    }
+
+    fun delete(repo: Repo){
+        viewModelScope.launch {
+            try {
+                listUserRepositoriesUseCase.delete(repo)
+            } catch (e: Exception) {
+                Log.e(TAG, "Error to delete item from database")
+            }
+        }
+    }
+
     sealed class State {
         object Loading : State()
         data class Success(val list: List<Repo>) : State()
         data class Error(val error: Throwable) : State()
+    }
+
+    companion object{
+        private const val TAG = "HomeViewModel"
     }
 }

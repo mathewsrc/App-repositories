@@ -28,7 +28,7 @@ class MainViewModel(
     }
 
     fun clearQuery() {
-       // _query.value = null
+        _query.value = null
     }
 
 //    fun getRepoList(user: String) {

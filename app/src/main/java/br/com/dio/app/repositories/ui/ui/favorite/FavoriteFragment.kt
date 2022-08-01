@@ -23,8 +23,8 @@ class FavoriteFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val dialog by lazy { context?.createProgressDialog() }
-    private val adapter by lazy { RepoListAdapter() }
     private val viewModel by viewModel<FavoriteViewModel>()
+    private lateinit var adapter: RepoListAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,6 +34,7 @@ class FavoriteFragment : Fragment() {
 
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val root: View = binding.root
+        adapter = RepoListAdapter(viewModel::save)
         binding.rvRepos.adapter = adapter
 
         viewModel.repos.observe(viewLifecycleOwner) {

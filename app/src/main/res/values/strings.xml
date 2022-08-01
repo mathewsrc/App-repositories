@@ -6,4 +6,6 @@
     <string name="title_activity_main2">MainActivity2</string>
     <string name="title_home">Home</string>
     <string name="title_favorite">Favorite</string>
+    <string name="cd_favorite">Favorite</string>
+    <string name="cd_share">Share</string>
 </resources>
