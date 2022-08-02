@@ -8,7 +8,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import retrofit2.HttpException
 
-class RepoRepositoryImpl(private val service: GitHubService, private val appDatabase: AppDatabase) : RepoRepository {
+class RepoRepositoryImpl(private val service: GitHubService, private val appDatabase: AppDatabase) :
+    RepoRepository {
 
     override suspend fun listRepositories(user: String) = flow {
         try {
@@ -29,5 +30,9 @@ class RepoRepositoryImpl(private val service: GitHubService, private val appData
 
     override suspend fun delete(repo: Repo) {
         appDatabase.repoDao().delete(repo)
+    }
+
+    override suspend fun getCount(): Flow<Int> {
+        return appDatabase.repoDao().getCount()
     }
 }

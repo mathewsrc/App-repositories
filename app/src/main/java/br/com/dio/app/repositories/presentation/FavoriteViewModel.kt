@@ -18,7 +18,11 @@ class FavoriteViewModel(
     private val _repos = MutableLiveData<State>()
     val repos: LiveData<State> = _repos
 
+    private val _total = MutableLiveData<Int>()
+    val total: LiveData<Int> = _total
+
     init {
+        getCount()
         getFavoriteList()
     }
 
@@ -53,6 +57,18 @@ class FavoriteViewModel(
                 listFavoriteRepositoriesUseCase.delete(repo)
             } catch (e: Exception) {
                 Log.e(TAG, "Error to delete item from database")
+            }
+        }
+    }
+
+    private fun getCount() {
+        viewModelScope.launch {
+            listFavoriteRepositoriesUseCase.getCount().onStart {
+                _total.value = 0
+            }.catch {
+                _total.value = 0
+            }.collect {
+                _total.value = it
             }
         }
     }

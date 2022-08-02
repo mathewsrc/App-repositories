@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import br.com.dio.app.repositories.R
 import br.com.dio.app.repositories.core.createDialog
 import br.com.dio.app.repositories.core.createProgressDialog
 import br.com.dio.app.repositories.databinding.FragmentFavoriteBinding
 import br.com.dio.app.repositories.presentation.FavoriteViewModel
-import br.com.dio.app.repositories.presentation.HomeViewModel
 import br.com.dio.app.repositories.ui.RepoListAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -36,6 +35,10 @@ class FavoriteFragment : Fragment() {
         val root: View = binding.root
         adapter = RepoListAdapter(viewModel::save)
         binding.rvRepos.adapter = adapter
+
+        viewModel.total.observe(viewLifecycleOwner) { count ->
+            binding.tvCount.text = getString(R.string.total_repositories, count)
+        }
 
         viewModel.repos.observe(viewLifecycleOwner) {
             when (it) {

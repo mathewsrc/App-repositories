@@ -1,29 +1,29 @@
 package br.com.dio.app.repositories.ui
 
-import android.app.SearchManager
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
-import android.widget.SimpleCursorAdapter
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
-import androidx.cursoradapter.widget.CursorAdapter
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import br.com.dio.app.repositories.R
-import br.com.dio.app.repositories.core.createDialog
-import br.com.dio.app.repositories.core.createProgressDialog
+import br.com.dio.app.repositories.core.hide
 import br.com.dio.app.repositories.core.hideSoftKeyboard
-import br.com.dio.app.repositories.data.local.AppDatabase
+import br.com.dio.app.repositories.core.show
 import br.com.dio.app.repositories.databinding.ActivityMainBinding
 import br.com.dio.app.repositories.presentation.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import org.koin.androidx.scope.lifecycleScope
+import com.google.android.material.chip.Chip
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
+
+class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
+    NavController.OnDestinationChangedListener {
 
     private lateinit var searchView: SearchView
     private val viewModel by viewModel<MainViewModel>()
@@ -46,17 +46,31 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        navController.addOnDestinationChangedListener(this)
+        initListeners()
+    }
+
+    private fun initListeners() {
+        binding.chipGroup.setOnCheckedStateChangeListener { _, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                val text = binding.root.findViewById<Chip>(checkedIds[0]).text.toString()
+                viewModel.searchBy(text)
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.setOnQueryTextListener(this)
+        searchView.apply {
+            queryHint = getString(R.string.action_search)
+            setOnQueryTextListener(this@MainActivity)
+        }
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let { viewModel.searchBy(it)/*viewModel.getRepoList(it)*/ }
+        query?.let { viewModel.searchBy(it) }
         binding.root.hideSoftKeyboard()
         return true
     }
@@ -66,8 +80,22 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener {
         return false
     }
 
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        when (destination.id) {
+            R.id.navigation_home -> {
+                binding.horizontalScrollView.show()
+            }
+            R.id.navigation_favorite -> {
+                binding.horizontalScrollView.hide()
+            }
+        }
+    }
+
     companion object {
         private const val TAG = "TAG"
     }
-
 }

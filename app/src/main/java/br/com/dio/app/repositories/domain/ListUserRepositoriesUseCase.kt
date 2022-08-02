@@ -13,11 +13,11 @@ class ListUserRepositoriesUseCase(
         return repository.listRepositories(param)
     }
 
-    suspend fun save(repo: Repo){
+    suspend fun save(repo: Repo) {
         repository.save(repo)
     }
 
-    suspend fun delete(repo: Repo){
+    suspend fun delete(repo: Repo) {
         repository.save(repo)
     }
 }

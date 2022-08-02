@@ -3,14 +3,6 @@ package br.com.dio.app.repositories.presentation
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import br.com.dio.app.repositories.data.model.Repo
-import br.com.dio.app.repositories.domain.ListFavoriteRepositoriesUseCase
-import br.com.dio.app.repositories.domain.ListUserRepositoriesUseCase
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.onStart
-import kotlinx.coroutines.launch
-import org.koin.core.qualifier._q
 
 class MainViewModel(
     /*private val listUserRepositoriesUseCase: ListUserRepositoriesUseCase,
@@ -18,12 +10,12 @@ class MainViewModel(
 ) : ViewModel() {
 
     private val _query = MutableLiveData<String?>(null)
-    val query:LiveData<String?> = _query
+    val query: LiveData<String?> = _query
 
 //    private val _repos = MutableLiveData<State>()
 //    val repos: LiveData<State> = _repos
 
-    fun searchBy(query:String){
+    fun searchBy(query: String) {
         _query.value = query
     }
 

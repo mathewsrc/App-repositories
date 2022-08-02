@@ -11,7 +11,13 @@ import org.koin.dsl.module
 object PresentationModule {
 
     fun load() {
-        loadKoinModules(listOf(mainViewModelModule(),homeViewModelModule(),favoriteViewModelModule()))
+        loadKoinModules(
+            listOf(
+                mainViewModelModule(),
+                homeViewModelModule(),
+                favoriteViewModelModule()
+            )
+        )
     }
 
     private fun mainViewModelModule(): Module {

@@ -1,7 +1,6 @@
 package br.com.dio.app.repositories.data.di
 
 import android.util.Log
-import androidx.room.Room
 import br.com.dio.app.repositories.data.local.AppDatabase
 import br.com.dio.app.repositories.data.repositories.RepoRepository
 import br.com.dio.app.repositories.data.repositories.RepoRepositoryImpl
@@ -53,15 +52,18 @@ object DataModule {
         }
     }
 
-    private fun localDbModule():Module{
+    private fun localDbModule(): Module {
         return module {
             single {
-               AppDatabase.createDatabase(androidContext())
+                AppDatabase.createDatabase(androidContext())
             }
         }
     }
 
-    private inline fun <reified T> createService(client: OkHttpClient, factory: GsonConverterFactory): T {
+    private inline fun <reified T> createService(
+        client: OkHttpClient,
+        factory: GsonConverterFactory
+    ): T {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
             .client(client)

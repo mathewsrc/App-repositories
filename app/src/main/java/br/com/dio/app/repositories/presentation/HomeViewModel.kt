@@ -7,7 +7,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.dio.app.repositories.data.model.Repo
 import br.com.dio.app.repositories.domain.ListUserRepositoriesUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
@@ -18,22 +20,35 @@ class HomeViewModel(
     private val _repos = MutableLiveData<State>()
     val repos: LiveData<State> = _repos
 
+    private val sortByStar = MutableStateFlow(SortByStar.NONE)
+
     fun getRepoList(user: String) {
         viewModelScope.launch {
-            listUserRepositoriesUseCase(user)
-                .onStart {
-                    _repos.postValue(State.Loading)
+            listUserRepositoriesUseCase(user).combine(sortByStar) { repos, sort ->
+                when (sort) {
+                    SortByStar.NONE -> repos
+                    SortByStar.ASCENDING -> repos.sortedBy { it.stargazersCount }
+                    SortByStar.DESCENDING -> repos.sortedByDescending { it.stargazersCount }
                 }
-                .catch {
-                    _repos.postValue(State.Error(it))
-                }
-                .collect {
-                    _repos.postValue(State.Success(it))
-                }
+            }.onStart {
+                _repos.postValue(State.Loading)
+            }.catch {
+                _repos.postValue(State.Error(it))
+            }.collect {
+                _repos.postValue(State.Success(it))
+            }
         }
     }
 
-    fun save(repo: Repo){
+    fun sortBy(sortBy: SortByStar) {
+        when (sortByStar.value) {
+            SortByStar.NONE -> sortByStar.value = sortBy
+            SortByStar.ASCENDING -> sortByStar.value = SortByStar.DESCENDING
+            SortByStar.DESCENDING -> sortByStar.value = SortByStar.ASCENDING
+        }
+    }
+
+    fun save(repo: Repo) {
         viewModelScope.launch {
             try {
                 listUserRepositoriesUseCase.save(repo)
@@ -43,7 +58,7 @@ class HomeViewModel(
         }
     }
 
-    fun delete(repo: Repo){
+    fun delete(repo: Repo) {
         viewModelScope.launch {
             try {
                 listUserRepositoriesUseCase.delete(repo)
@@ -59,7 +74,13 @@ class HomeViewModel(
         data class Error(val error: Throwable) : State()
     }
 
-    companion object{
+    enum class SortByStar {
+        NONE,
+        ASCENDING,
+        DESCENDING
+    }
+
+    companion object {
         private const val TAG = "HomeViewModel"
     }
 }

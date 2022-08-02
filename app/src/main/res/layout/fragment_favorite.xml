@@ -6,15 +6,30 @@
     android:layout_height="match_parent"
     tools:context=".ui.ui.favorite.FavoriteFragment">
 
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/tv_count"
+        style="@style/TextAppearance.Material3.HeadlineSmall"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/layout_padding"
+        android:layout_marginTop="@dimen/layout_padding"
+        android:layout_marginEnd="@dimen/layout_padding"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Total 120" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_repos"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginTop="@dimen/layout_padding"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_count"
         tools:itemCount="5"
         tools:listitem="@layout/item_repo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

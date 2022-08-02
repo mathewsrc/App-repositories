@@ -18,7 +18,7 @@ object DomainModule {
         }
     }
 
-    private fun favoriteUserCaseModule():Module{
+    private fun favoriteUserCaseModule(): Module {
         return module {
             factory { ListFavoriteRepositoriesUseCase(get()) }
         }

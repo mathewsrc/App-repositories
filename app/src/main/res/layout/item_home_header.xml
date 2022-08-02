@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sort_by"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?attr/selectableItemBackgroundBorderless"
+    android:gravity="center_vertical|end">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/cd_sort"
+        android:src="@drawable/ic_stars"
+        app:tint="@color/star_color" />
+
+    <ImageView
+        android:id="@+id/iv_sort"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/layout_padding"
+        android:contentDescription="@string/cd_sort"
+        android:padding="@dimen/layout_padding"
+        android:src="@drawable/ic_sort_24"
+        app:tint="?attr/colorPrimarySurface" />
+
+</LinearLayout>

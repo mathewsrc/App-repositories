@@ -11,7 +11,10 @@ interface RepoDao {
     suspend fun save(repo: Repo)
 
     @Query("SELECT * FROM repo WHERE favorite = 1")
-    fun getAll():Flow<List<Repo>>
+    fun getAll(): Flow<List<Repo>>
+
+    @Query("SELECT COUNT(*) FROM repo")
+    fun getCount(): Flow<Int>
 
     @Delete
     suspend fun delete(repo: Repo)

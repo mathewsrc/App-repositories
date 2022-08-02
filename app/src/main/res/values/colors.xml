@@ -1,10 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Primary colors -->
+    <color name="primaryColor">#673ab7</color>
+    <color name="primaryLightColor">#9a67ea</color>
+    <color name="primaryDarkColor">#320b86</color>
 
+    <!-- Secondary colors -->
+    <color name="secondaryColor">#2196f3</color>
+    <color name="secondaryLightColor">#6ec6ff</color>
+    <color name="secondaryDarkColor">#0069c0</color>
 
-
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="star_color">#FFEB3B</color>
     <color name="favorite_active">#FF0000</color>
     <color name="favorite_inactive">#887E7E</color>
 </resources>

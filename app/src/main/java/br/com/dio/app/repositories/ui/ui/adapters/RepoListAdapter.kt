@@ -17,7 +17,8 @@ import br.com.dio.app.repositories.databinding.ItemRepoBinding
 import com.bumptech.glide.Glide
 import java.util.*
 
-class RepoListAdapter(private val onFavorite:(Repo) -> Unit) : ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallback()) {
+class RepoListAdapter(private val onFavorite: (Repo) -> Unit) :
+    ListAdapter<Repo, RepoListAdapter.ViewHolder>(DiffCallback()) {
 
     private val backgroundColor by lazy {
         val rnd = Random()
@@ -44,9 +45,14 @@ class RepoListAdapter(private val onFavorite:(Repo) -> Unit) : ListAdapter<Repo,
             binding.tvRepoDescription.text = item.description
             binding.chipStar.text = item.stargazersCount.toString()
             binding.tvRepoLanguage.apply {
-                item.language?.let {  language ->
+                item.language?.let { language ->
                     val string = SpannableString(language).apply {
-                       setSpan(BackgroundColorSpan(backgroundColor), 0, language.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+                        setSpan(
+                            BackgroundColorSpan(backgroundColor),
+                            0,
+                            language.length,
+                            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+                        )
                     }
                     text = string
                 }
@@ -56,7 +62,8 @@ class RepoListAdapter(private val onFavorite:(Repo) -> Unit) : ListAdapter<Repo,
                 onFavorite(item)
                 notifyItemChanged(position)
             }
-            val favoriteColor: Int = if (item.favorite) R.color.favorite_active else R.color.favorite_inactive
+            val favoriteColor: Int =
+                if (item.favorite) R.color.favorite_active else R.color.favorite_inactive
 
             binding.ivFavorite.setColorFilter(
                 context.resources.getColor(favoriteColor, context.theme)
