@@ -15,3 +15,15 @@ This application tries to apply the concept of clean architecture using the kotl
 - Glide
 - SwipeRefreshLayout
 - RecyclerView
+
+## Screenshots
+
+### Repositories List
+This screen show a list of github repositories (remote)
+
+
+### Favorite List
+This screen show a list of user favorite repositories (local)
+
+
+
