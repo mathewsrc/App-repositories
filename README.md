@@ -21,11 +21,11 @@ This application tries to apply the concept of clean architecture using the kotl
 ### Repositories List
 This screen show a list of github repositories (remote)
 
-<img src="https://github.com/punkmic/App-repositories/blob/master/app/src/main/res/raw/repositories_list_light.png" width="400" height="600">
+<img src="https://github.com/punkmic/App-repositories/blob/master/app/src/main/res/raw/repositories_list_light.png" width="400" height="700">
 
 ### Favorite List
 This screen show a list of user favorite repositories (local)
 
-<img src="https://github.com/punkmic/App-repositories/blob/master/app/src/main/res/raw/favorite_light.png" width="400" height="600">
+<img src="https://github.com/punkmic/App-repositories/blob/master/app/src/main/res/raw/favorite_light.png" width="400" height="700">
 
 
