@@ -1,9 +1,9 @@
 # App-Repositories
 Android application to search and save Github repositories
 
-Este aplicativo tenta aplicar o conceito de arquitetura limpa utilizando a liguagem kotlin e algumas bibliotecas disponibilizadas na [Jetpack library](https://developer.android.com/jetpack) e outras bibliotecas de terceiros como [Retrofit 2](https://square.github.io/retrofit/) e [Glide](https://bumptech.github.io/glide/).
+This application tries to apply the concept of clean architecture using the kotlin language and some libraries available in [Jetpack library](https://developer.android.com/jetpack) and other third-party libraries like [Retrofit 2](https:// square.github.io/retrofit/) and [Glide](https://bumptech.github.io/glide/).
 
-## Bibliotecas
+## Libraries
 - Material Design
 - Room
 - Datastore
