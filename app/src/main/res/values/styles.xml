@@ -27,6 +27,7 @@
         <item name="chipIconTint">@color/secondaryLightColor</item>
         <item name="chipBackgroundColor">@color/secondaryColor</item>
         <item name="checkedIconVisible">false</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
 
