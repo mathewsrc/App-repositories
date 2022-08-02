@@ -9,14 +9,17 @@
     <string name="cd_favorite">Favorite</string>
     <string name="cd_share">Share</string>
     <string name="total_repositories">Total %d</string>
-    <string name="python">python</string>
-    <string name="java">java</string>
-    <string name="css">css</string>
-    <string name="tensorflow">tensorflow</string>
-    <string name="kotlin">kotlin</string>
-    <string name="javascript">javascript</string>
-    <string name="html">html</string>
-    <string name="node_js">node</string>
+    <string name="python">Python</string>
+    <string name="css">CSS</string>
+    <string name="tensorflow">Tensorflow</string>
+    <string name="kotlin">Kotlin</string>
+    <string name="javascript">Javascript</string>
+    <string name="node_js">Node</string>
     <string name="ascending">Ascending</string>
     <string name="descending">Descending</string>
+    <string name="android">Android</string>
+    <string name="room">Room</string>
+    <string name="livedata">Livedata</string>
+    <string name="datastore">Datastore</string>
+    <string name="viewmodel">ViewModel</string>
 </resources>
