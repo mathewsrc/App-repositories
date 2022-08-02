@@ -28,7 +28,7 @@ object PresentationModule {
 
     private fun homeViewModelModule(): Module {
         return module {
-            viewModel { HomeViewModel(get()) }
+            viewModel { HomeViewModel(get(), get()) }
         }
     }
 

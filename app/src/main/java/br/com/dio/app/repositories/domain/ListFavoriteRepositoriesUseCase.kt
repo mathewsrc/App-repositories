@@ -7,8 +7,9 @@ import kotlinx.coroutines.flow.Flow
 
 class ListFavoriteRepositoriesUseCase(
     private val repository: RepoRepository
-) : UseCase<Unit, List<Repo>>() {
-    override suspend fun execute(param: Unit): Flow<List<Repo>> {
+) : UseCase.NoParam<List<Repo>>() {
+
+    override suspend fun execute(): Flow<List<Repo>> {
         return repository.listFavoriteRepositories()
     }
 

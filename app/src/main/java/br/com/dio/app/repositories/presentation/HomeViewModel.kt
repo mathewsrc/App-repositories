@@ -7,24 +7,39 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import br.com.dio.app.repositories.data.model.Repo
 import br.com.dio.app.repositories.domain.ListUserRepositoriesUseCase
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.onStart
+import br.com.dio.app.repositories.domain.UserPreferencesUseCase
+import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
     private val listUserRepositoriesUseCase: ListUserRepositoriesUseCase,
+    private val userPreferencesUseCase: UserPreferencesUseCase
 ) : ViewModel() {
+
+    private var latestName: String? = null
 
     private val _repos = MutableLiveData<State>()
     val repos: LiveData<State> = _repos
 
     private val sortByStar = MutableStateFlow(SortByStar.NONE)
 
-    fun getRepoList(user: String) {
+    private val _latestSearchName = MutableLiveData<String?>()
+    val latestSearchName: LiveData<String?> = _latestSearchName
+
+    init {
         viewModelScope.launch {
-            listUserRepositoriesUseCase(user).combine(sortByStar) { repos, sort ->
+            _latestSearchName.value = userPreferencesUseCase.execute().catch {
+                Log.e(TAG, "Error to retrieve search repository key", it)
+                // Emit a default key.
+                emit(DEFAULT_SEARCH_KEY)
+            }.first()
+        }
+    }
+
+    fun getRepoList(name: String = latestName ?: DEFAULT_SEARCH_KEY) {
+        viewModelScope.launch {
+            latestName = name
+            listUserRepositoriesUseCase(name).combine(sortByStar) { repos, sort ->
                 when (sort) {
                     SortByStar.NONE -> repos
                     SortByStar.ASCENDING -> repos.sortedBy { it.stargazersCount }
@@ -41,11 +56,7 @@ class HomeViewModel(
     }
 
     fun sortBy(sortBy: SortByStar) {
-        when (sortByStar.value) {
-            SortByStar.NONE -> sortByStar.value = sortBy
-            SortByStar.ASCENDING -> sortByStar.value = SortByStar.DESCENDING
-            SortByStar.DESCENDING -> sortByStar.value = SortByStar.ASCENDING
-        }
+        sortByStar.value = sortBy
     }
 
     fun save(repo: Repo) {
@@ -53,17 +64,17 @@ class HomeViewModel(
             try {
                 listUserRepositoriesUseCase.save(repo)
             } catch (e: Exception) {
-                Log.e(TAG, "Error to save item to database")
+                Log.e(TAG, "Error to save item to database", e)
             }
         }
     }
 
-    fun delete(repo: Repo) {
+    fun saveSearchRepositoryName(key: String) {
         viewModelScope.launch {
             try {
-                listUserRepositoriesUseCase.delete(repo)
+                userPreferencesUseCase.saveSearchKey(key)
             } catch (e: Exception) {
-                Log.e(TAG, "Error to delete item from database")
+                Log.e(TAG, "Error to save search key in datastore", e)
             }
         }
     }
@@ -82,5 +93,6 @@ class HomeViewModel(
 
     companion object {
         private const val TAG = "HomeViewModel"
+        private const val DEFAULT_SEARCH_KEY = "android"
     }
 }

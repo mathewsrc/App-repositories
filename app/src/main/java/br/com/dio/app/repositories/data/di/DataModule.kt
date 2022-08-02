@@ -1,11 +1,20 @@
 package br.com.dio.app.repositories.data.di
 
 import android.util.Log
+import androidx.datastore.core.handlers.ReplaceFileCorruptionHandler
+import androidx.datastore.preferences.core.PreferenceDataStoreFactory
+import androidx.datastore.preferences.core.emptyPreferences
+import androidx.datastore.preferences.preferencesDataStoreFile
 import br.com.dio.app.repositories.data.local.AppDatabase
 import br.com.dio.app.repositories.data.repositories.RepoRepository
 import br.com.dio.app.repositories.data.repositories.RepoRepositoryImpl
+import br.com.dio.app.repositories.data.repositories.UserPreferencesRepository
+import br.com.dio.app.repositories.data.repositories.UserPreferencesRepositoryImpl
 import br.com.dio.app.repositories.data.services.GitHubService
 import com.google.gson.GsonBuilder
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
@@ -18,9 +27,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 object DataModule {
 
     private const val OK_HTTP = "OkHttp"
+    private const val USER_SEARCH_PREFERENCE = "search"
 
     fun load() {
-        loadKoinModules(networkModules() + repositoriesModule() + localDbModule())
+        loadKoinModules(networkModules() + repositoriesModule() + localDbModule() + datastoreModule())
     }
 
     private fun networkModules(): Module {
@@ -49,6 +59,7 @@ object DataModule {
     private fun repositoriesModule(): Module {
         return module {
             single<RepoRepository> { RepoRepositoryImpl(get(), get()) }
+            single<UserPreferencesRepository> { UserPreferencesRepositoryImpl(get()) }
         }
     }
 
@@ -56,6 +67,20 @@ object DataModule {
         return module {
             single {
                 AppDatabase.createDatabase(androidContext())
+            }
+        }
+    }
+
+    private fun datastoreModule(): Module {
+        return module {
+            single {
+                PreferenceDataStoreFactory.create(
+                    corruptionHandler = ReplaceFileCorruptionHandler {
+                        emptyPreferences()
+                    },
+                    scope = CoroutineScope(Dispatchers.IO + SupervisorJob()),
+                    produceFile = { androidContext().preferencesDataStoreFile(USER_SEARCH_PREFERENCE) }
+                )
             }
         }
     }

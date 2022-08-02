@@ -25,7 +25,7 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     NavController.OnDestinationChangedListener {
 
-    private lateinit var searchView: SearchView
+    private var searchView: SearchView? = null
     private val viewModel by viewModel<MainViewModel>()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.main_menu, menu)
         searchView = menu.findItem(R.id.action_search).actionView as SearchView
-        searchView.apply {
+        searchView!!.apply {
             queryHint = getString(R.string.action_search)
             setOnQueryTextListener(this@MainActivity)
         }
@@ -88,9 +88,11 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
         when (destination.id) {
             R.id.navigation_home -> {
                 binding.horizontalScrollView.show()
+                searchView?.show()
             }
             R.id.navigation_favorite -> {
                 binding.horizontalScrollView.hide()
+                searchView?.hide()
             }
         }
     }

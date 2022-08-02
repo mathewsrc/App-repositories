@@ -1,27 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/sort_by"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackgroundBorderless"
-    android:gravity="center_vertical|end">
-
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:contentDescription="@string/cd_sort"
-        android:src="@drawable/ic_stars"
-        app:tint="@color/star_color" />
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/iv_sort"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/layout_padding"
-        android:contentDescription="@string/cd_sort"
         android:padding="@dimen/layout_padding"
         android:src="@drawable/ic_sort_24"
-        app:tint="?attr/colorPrimarySurface" />
+        app:layout_constraintBottom_toBottomOf="@+id/chip_group"
+        app:layout_constraintEnd_toStartOf="@+id/chip_group"
+        app:layout_constraintTop_toTopOf="@+id/chip_group"
+        app:tint="?attr/colorPrimary" />
 
-</LinearLayout>
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/chip_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:singleLine="true"
+        android:layout_marginTop="@dimen/layout_padding"
+        android:layout_marginEnd="@dimen/layout_padding"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleSelection="true">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sort_descent"
+            android:layout_width="wrap_content"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/ascending"
+            android:text="@string/ascending"
+            app:chipIcon="@drawable/ic_stars"
+            app:chipIconTint="@color/star_color" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/chip_sort_ascent"
+            style="@style/Widget.MaterialComponents.Chip.Choice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="@string/descending"
+            android:text="@string/descending"
+            app:chipIcon="@drawable/ic_stars"
+            app:chipIconTint="@color/star_color" />
+    </com.google.android.material.chip.ChipGroup>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

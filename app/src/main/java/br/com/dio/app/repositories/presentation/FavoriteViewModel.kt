@@ -28,7 +28,7 @@ class FavoriteViewModel(
 
     private fun getFavoriteList() {
         viewModelScope.launch {
-            listFavoriteRepositoriesUseCase(Unit)
+            listFavoriteRepositoriesUseCase()
                 .onStart {
                     _repos.postValue(State.Loading)
                 }

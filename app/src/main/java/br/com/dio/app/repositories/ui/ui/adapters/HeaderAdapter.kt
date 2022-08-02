@@ -3,9 +3,11 @@ package br.com.dio.app.repositories.ui.ui.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import br.com.dio.app.repositories.R
 import br.com.dio.app.repositories.databinding.ItemHomeHeaderBinding
+import br.com.dio.app.repositories.presentation.HomeViewModel
 
-class HeaderAdapter(private val onClick: () -> Unit) :
+class HeaderAdapter(private val onClick: (HomeViewModel.SortByStar) -> Unit) :
     RecyclerView.Adapter<HeaderAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -15,9 +17,19 @@ class HeaderAdapter(private val onClick: () -> Unit) :
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.apply {
-            sortBy.setOnClickListener {
-                onClick()
+        holder.binding.chipGroup.setOnCheckedStateChangeListener { group, checkedIds ->
+            if (checkedIds.isNotEmpty()) {
+                when (checkedIds[0]) {
+                    R.id.chip_sort_ascent -> {
+                        onClick(HomeViewModel.SortByStar.ASCENDING)
+                    }
+                    R.id.chip_sort_descent -> {
+                        onClick(HomeViewModel.SortByStar.DESCENDING)
+                    }
+                    else -> {
+                        onClick(HomeViewModel.SortByStar.NONE)
+                    }
+                }
             }
         }
     }

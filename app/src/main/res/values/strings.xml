@@ -17,7 +17,6 @@
     <string name="javascript">javascript</string>
     <string name="html">html</string>
     <string name="node_js">node</string>
-    <string name="cd_sort">Sort by stars</string>
     <string name="ascending">Ascending</string>
-    <string name="descending">Desceding</string>
+    <string name="descending">Descending</string>
 </resources>

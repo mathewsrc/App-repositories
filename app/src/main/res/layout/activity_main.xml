@@ -18,6 +18,7 @@
             style="@style/Widget.MaterialComponents.Toolbar.PrimarySurface"
             android:layout_width="match_parent"
             tools:text="App name"
+            app:titleTextAppearance="@style/TextAppearance.App.Toolbar"
             android:layout_height="wrap_content"
             app:layout_scrollFlags="scroll|enterAlways" />
 
@@ -38,56 +39,56 @@
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/python"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/python" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/java"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/java" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/css"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/css" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/tensorflow"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/tensorflow" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/kotlin"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/kotlin" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/javascript"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/javascript" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/html"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/html" />
 
                 <com.google.android.material.chip.Chip
                     android:id="@+id/node"
-                    style="@style/Widget.MaterialComponents.Chip.Choice"
+                    style="@style/Widget.App.Chip"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/node_js" />
