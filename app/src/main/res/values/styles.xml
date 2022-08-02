@@ -24,12 +24,24 @@
 
     <!-- Chip style -->
     <style name="Widget.App.Chip" parent="Widget.MaterialComponents.Chip.Choice">
-        <item name="chipIconTint">@color/secondaryLightColor</item>
-        <item name="chipBackgroundColor">@color/secondaryColor</item>
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.Chip</item>
+        <item name="android:textAppearance">@style/TextAppearance.App.Body2</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MyApp.SmallComponent</item>
         <item name="checkedIconVisible">false</item>
-        <item name="android:textColor">?attr/colorOnPrimary</item>
     </style>
 
+    <!-- Chip text appearance style -->
+    <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
+        <item name="fontFamily">@font/</item>
+        <item name="android:fontFamily">@font/</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="shapeAppearance">@style/ShapeAppearance.MyApp.SmallComponent</item>
+    </style>
+
+    <!-- Chip theme overlay -->
+    <style name="ThemeOverlay.App.Chip" parent="">
+        <item name="colorOnSurface">@color/secondaryColor</item>
+    </style>
 
     <!-- Define a custom style for toolbar title -->
     <style name="TextAppearance.App.Toolbar" parent="TextAppearance.MaterialComponents.Headline5">
