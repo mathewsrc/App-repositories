@@ -22,7 +22,7 @@ object PresentationModule {
 
     private fun mainViewModelModule(): Module {
         return module {
-            viewModel { MainViewModel(/*get(), get()*/) }
+            viewModel { MainViewModel(get(), get()) }
         }
     }
 

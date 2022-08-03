@@ -16,8 +16,4 @@ class ListUserRepositoriesUseCase(
     suspend fun save(repo: Repo) {
         repository.save(repo)
     }
-
-    suspend fun delete(repo: Repo) {
-        repository.save(repo)
-    }
 }

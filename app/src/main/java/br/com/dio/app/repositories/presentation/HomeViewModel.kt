@@ -8,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import br.com.dio.app.repositories.data.model.Repo
 import br.com.dio.app.repositories.domain.ListUserRepositoriesUseCase
 import br.com.dio.app.repositories.domain.UserPreferencesUseCase
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
 
 class HomeViewModel(
@@ -16,30 +19,16 @@ class HomeViewModel(
     private val userPreferencesUseCase: UserPreferencesUseCase
 ) : ViewModel() {
 
-    private var latestName: String? = null
 
     private val _repos = MutableLiveData<State>()
     val repos: LiveData<State> = _repos
 
     private val sortByStar = MutableStateFlow(SortByStar.NONE)
 
-    private val _latestSearchName = MutableLiveData<String?>()
-    val latestSearchName: LiveData<String?> = _latestSearchName
-
-    init {
+    fun getRepoList(name: String) {
         viewModelScope.launch {
-            _latestSearchName.value = userPreferencesUseCase.execute().catch {
-                Log.e(TAG, "Error to retrieve search repository key", it)
-                // Emit a default key.
-                emit(DEFAULT_SEARCH_KEY)
-            }.first()
-        }
-    }
-
-    fun getRepoList(name: String = latestName ?: DEFAULT_SEARCH_KEY) {
-        viewModelScope.launch {
-            latestName = name
-            listUserRepositoriesUseCase(name).combine(sortByStar) { repos, sort ->
+            val reposFlow = listUserRepositoriesUseCase(name)
+            reposFlow.combine(sortByStar) { repos, sort ->
                 when (sort) {
                     SortByStar.NONE -> repos
                     SortByStar.ASCENDING -> repos.sortedBy { it.stargazersCount }
@@ -50,6 +39,8 @@ class HomeViewModel(
             }.catch {
                 _repos.postValue(State.Error(it))
             }.collect {
+                // Save name to datastore
+                saveSearchRepositoryName(name)
                 _repos.postValue(State.Success(it))
             }
         }

@@ -34,6 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/layout_half_padding"
+                android:background="?attr/colorPrimarySurface"
                 app:singleLine="true"
                 app:singleSelection="true">
 

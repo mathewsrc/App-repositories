@@ -7,6 +7,5 @@ interface RepoRepository {
     suspend fun listRepositories(user: String): Flow<List<Repo>>
     suspend fun listFavoriteRepositories(): Flow<List<Repo>>
     suspend fun save(repo: Repo)
-    suspend fun delete(repo: Repo)
     suspend fun getCount(): Flow<Int>
 }

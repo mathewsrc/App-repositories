@@ -17,10 +17,6 @@ class ListFavoriteRepositoriesUseCase(
         repository.save(repo)
     }
 
-    suspend fun delete(repo: Repo) {
-        repository.save(repo)
-    }
-
     suspend fun getCount(): Flow<Int> {
         return repository.getCount()
     }

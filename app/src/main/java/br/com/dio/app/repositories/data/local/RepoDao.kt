@@ -15,7 +15,4 @@ interface RepoDao {
 
     @Query("SELECT COUNT(*) FROM repo")
     fun getCount(): Flow<Int>
-
-    @Delete
-    suspend fun delete(repo: Repo)
 }

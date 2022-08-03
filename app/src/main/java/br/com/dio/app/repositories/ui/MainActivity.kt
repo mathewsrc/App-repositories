@@ -19,6 +19,7 @@ import br.com.dio.app.repositories.databinding.ActivityMainBinding
 import br.com.dio.app.repositories.presentation.MainViewModel
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.chip.Chip
+import org.koin.androidx.viewmodel.ext.android.stateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     NavController.OnDestinationChangedListener {
 
     private var searchView: SearchView? = null
-    private val viewModel by viewModel<MainViewModel>()
+    private val viewModel by stateViewModel<MainViewModel>()
     private val binding by lazy { ActivityMainBinding.inflate(layoutInflater) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,7 +71,10 @@ class MainActivity : AppCompatActivity(), SearchView.OnQueryTextListener,
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        query?.let { viewModel.searchBy(it) }
+        query?.let {
+            viewModel.searchBy(it)
+            binding.chipGroup.clearCheck()
+        }
         binding.root.hideSoftKeyboard()
         return true
     }

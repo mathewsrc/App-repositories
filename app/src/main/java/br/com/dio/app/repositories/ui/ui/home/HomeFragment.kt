@@ -14,9 +14,9 @@ import br.com.dio.app.repositories.presentation.HomeViewModel
 import br.com.dio.app.repositories.presentation.MainViewModel
 import br.com.dio.app.repositories.ui.RepoListAdapter
 import br.com.dio.app.repositories.ui.ui.adapters.HeaderAdapter
+import org.koin.androidx.viewmodel.ext.android.sharedStateViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-//val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "search")
 
 class HomeFragment : Fragment() {
 
@@ -31,7 +31,7 @@ class HomeFragment : Fragment() {
     private val viewModel by viewModel<HomeViewModel>()
 
     // Create viewmodel instance scoped to activity component
-    private val mainViewModel by activityViewModels<MainViewModel>()
+    private val mainViewModel by sharedStateViewModel<MainViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -47,12 +47,6 @@ class HomeFragment : Fragment() {
         headerAdapter = HeaderAdapter(viewModel::sortBy)
         adapter = RepoListAdapter(viewModel::save)
         binding.rvRepos.adapter = ConcatAdapter(headerAdapter, adapter)
-
-        viewModel.latestSearchName.observe(viewLifecycleOwner) { name ->
-            name?.let {
-                viewModel.getRepoList(it)
-            }
-        }
 
         viewModel.repos.observe(viewLifecycleOwner) {
             when (it) {
@@ -77,9 +71,6 @@ class HomeFragment : Fragment() {
         mainViewModel.query.observe(viewLifecycleOwner) {
             it?.let { query ->
                 viewModel.getRepoList(query)
-                mainViewModel.clearQuery()
-                // Save in Datastore
-                viewModel.saveSearchRepositoryName(query)
             }
         }
         return root
@@ -87,7 +78,7 @@ class HomeFragment : Fragment() {
 
     private fun setupSwipeToRefresh() {
         binding.swipeToRefresh.setOnRefreshListener {
-            viewModel.getRepoList()
+            //viewModel.getRepoList()
         }
     }
 
