@@ -15,6 +15,7 @@ This application tries to apply the concept of clean architecture using the kotl
 - Glide
 - SwipeRefreshLayout
 - RecyclerView
+- SavedStateHandle
 
 ## Screenshots
 
