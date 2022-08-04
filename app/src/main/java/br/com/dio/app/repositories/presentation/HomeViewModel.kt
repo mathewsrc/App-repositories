@@ -19,7 +19,6 @@ class HomeViewModel(
     private val userPreferencesUseCase: UserPreferencesUseCase
 ) : ViewModel() {
 
-
     private val _repos = MutableLiveData<State>()
     val repos: LiveData<State> = _repos
 
@@ -27,8 +26,7 @@ class HomeViewModel(
 
     fun getRepoList(name: String) {
         viewModelScope.launch {
-            val reposFlow = listUserRepositoriesUseCase(name)
-            reposFlow.combine(sortByStar) { repos, sort ->
+            listUserRepositoriesUseCase(name).combine(sortByStar) { repos, sort ->
                 when (sort) {
                     SortByStar.NONE -> repos
                     SortByStar.ASCENDING -> repos.sortedBy { it.stargazersCount }

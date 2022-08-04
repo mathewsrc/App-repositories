@@ -42,8 +42,6 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        setupSwipeToRefresh()
-
         headerAdapter = HeaderAdapter(viewModel::sortBy)
         adapter = RepoListAdapter(viewModel::save)
         binding.rvRepos.adapter = ConcatAdapter(headerAdapter, adapter)
@@ -52,18 +50,15 @@ class HomeFragment : Fragment() {
             when (it) {
                 HomeViewModel.State.Loading -> {
                     dialog?.show()
-                    binding.swipeToRefresh.isRefreshing = true
                 }
                 is HomeViewModel.State.Error -> {
                     requireContext().createDialog {
                         setMessage(it.error.message)
                     }.show()
                     dialog?.dismiss()
-                    binding.swipeToRefresh.isRefreshing = false
                 }
                 is HomeViewModel.State.Success -> {
                     dialog?.dismiss()
-                    binding.swipeToRefresh.isRefreshing = false
                     adapter.submitList(it.list)
                 }
             }
@@ -71,15 +66,11 @@ class HomeFragment : Fragment() {
         mainViewModel.query.observe(viewLifecycleOwner) {
             it?.let { query ->
                 viewModel.getRepoList(query)
+                // Keep query as a single event
+                mainViewModel.clearSearch()
             }
         }
         return root
-    }
-
-    private fun setupSwipeToRefresh() {
-        binding.swipeToRefresh.setOnRefreshListener {
-            //viewModel.getRepoList()
-        }
     }
 
     override fun onDestroyView() {

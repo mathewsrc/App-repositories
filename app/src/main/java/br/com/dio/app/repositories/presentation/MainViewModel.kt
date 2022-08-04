@@ -1,12 +1,11 @@
 package br.com.dio.app.repositories.presentation
 
-import android.util.Log
 import androidx.lifecycle.*
 import br.com.dio.app.repositories.domain.UserPreferencesUseCase
 import br.com.dio.app.repositories.presentation.MainViewModel.Companion.DEFAULT_QUERY
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import org.koin.core.qualifier._q
 
 /**
  *  if application is on its first run we going to use the [DEFAULT_QUERY],
@@ -20,19 +19,16 @@ class MainViewModel(
     private val userPreferencesUseCase: UserPreferencesUseCase
 ) : ViewModel() {
 
-    @OptIn(ExperimentalCoroutinesApi::class)
-    val query: LiveData<String?> =
-        savedStateHandle.getStateFlow<String?>(LATEST_SEARCH_QUERY, DEFAULT_QUERY)
-            .mapLatest { it }.asLiveData()
+    private val _query = MutableLiveData<String?>()
+    val query : LiveData<String?> = _query
 
     init {
         viewModelScope.launch {
-            // Collect only the first element emitted  and cancel flow's collection
-            val name = userPreferencesUseCase.execute().catch {
-                emit(DEFAULT_QUERY)
-            }.first()
-            if (name != null && savedStateHandle.get<String?>(LATEST_SEARCH_QUERY) != null) {
-                savedStateHandle[LATEST_SEARCH_QUERY] = name
+            savedStateHandle.getStateFlow(
+                LATEST_SEARCH_QUERY,
+                userPreferencesUseCase.execute().catch { emit(DEFAULT_QUERY) }.first() ?: DEFAULT_QUERY
+            ).collectLatest {
+                _query.value = it
             }
         }
     }
@@ -41,6 +37,10 @@ class MainViewModel(
         if (query != savedStateHandle[LATEST_SEARCH_QUERY]) {
             savedStateHandle[LATEST_SEARCH_QUERY] = query
         }
+    }
+
+    fun clearSearch() {
+        _query.value = null
     }
 
     companion object {
