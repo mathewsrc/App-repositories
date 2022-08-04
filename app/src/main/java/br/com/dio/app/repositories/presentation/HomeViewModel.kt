@@ -29,8 +29,8 @@ class HomeViewModel(
             listUserRepositoriesUseCase(name).combine(sortByStar) { repos, sort ->
                 when (sort) {
                     SortByStar.NONE -> repos
-                    SortByStar.ASCENDING -> repos.sortedBy { it.stargazersCount }
-                    SortByStar.DESCENDING -> repos.sortedByDescending { it.stargazersCount }
+                    SortByStar.ASCENDING -> repos.sortedByDescending { it.stargazersCount }
+                    SortByStar.DESCENDING -> repos.sortedBy { it.stargazersCount }
                 }
             }.onStart {
                 _repos.postValue(State.Loading)

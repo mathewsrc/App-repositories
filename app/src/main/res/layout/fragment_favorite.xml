@@ -15,6 +15,7 @@
         android:layout_marginTop="@dimen/layout_padding"
         android:layout_marginEnd="@dimen/layout_padding"
         android:textStyle="bold"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"

@@ -51,6 +51,16 @@ class FavoriteViewModel(
         }
     }
 
+    fun delete(repo: Repo){
+        viewModelScope.launch {
+            try {
+                listFavoriteRepositoriesUseCase.delete(repo)
+            }catch (e:Exception){
+                Log.e(TAG, "Error to delete repo", e)
+            }
+        }
+    }
+
     private fun getCount() {
         viewModelScope.launch {
             listFavoriteRepositoriesUseCase.getCount().onStart {

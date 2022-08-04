@@ -30,7 +30,6 @@ class HomeFragment : Fragment() {
     private val dialog by lazy { context?.createProgressDialog() }
     private val viewModel by viewModel<HomeViewModel>()
 
-    // Create viewmodel instance scoped to activity component
     private val mainViewModel by sharedStateViewModel<MainViewModel>()
 
     override fun onCreateView(

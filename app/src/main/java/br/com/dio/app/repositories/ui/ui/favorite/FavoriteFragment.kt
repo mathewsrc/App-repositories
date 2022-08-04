@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import br.com.dio.app.repositories.R
 import br.com.dio.app.repositories.core.createDialog
 import br.com.dio.app.repositories.core.createProgressDialog
+import br.com.dio.app.repositories.core.hide
+import br.com.dio.app.repositories.core.show
 import br.com.dio.app.repositories.databinding.FragmentFavoriteBinding
 import br.com.dio.app.repositories.presentation.FavoriteViewModel
 import br.com.dio.app.repositories.ui.RepoListAdapter
@@ -33,7 +35,7 @@ class FavoriteFragment : Fragment() {
 
         _binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         val root: View = binding.root
-        adapter = RepoListAdapter(viewModel::save)
+        adapter = RepoListAdapter(viewModel::delete)
         binding.rvRepos.adapter = adapter
 
         viewModel.total.observe(viewLifecycleOwner) { count ->
@@ -42,15 +44,22 @@ class FavoriteFragment : Fragment() {
 
         viewModel.repos.observe(viewLifecycleOwner) {
             when (it) {
-                FavoriteViewModel.State.Loading -> dialog?.show()
+                FavoriteViewModel.State.Loading -> {
+                    binding.tvCount.hide()
+                    dialog?.show()
+                }
                 is FavoriteViewModel.State.Error -> {
                     requireContext().createDialog {
                         setMessage(it.error.message)
                     }.show()
                     dialog?.dismiss()
+                    binding.tvCount.hide()
                 }
                 is FavoriteViewModel.State.Success -> {
                     dialog?.dismiss()
+                    if(it.list.isNotEmpty()){
+                        binding.tvCount.show()
+                    }
                     adapter.submitList(it.list)
                 }
             }

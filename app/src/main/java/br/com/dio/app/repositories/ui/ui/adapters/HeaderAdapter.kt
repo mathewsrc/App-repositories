@@ -30,6 +30,8 @@ class HeaderAdapter(private val onClick: (HomeViewModel.SortByStar) -> Unit) :
                         onClick(HomeViewModel.SortByStar.NONE)
                     }
                 }
+            }else{
+                onClick(HomeViewModel.SortByStar.NONE)
             }
         }
     }

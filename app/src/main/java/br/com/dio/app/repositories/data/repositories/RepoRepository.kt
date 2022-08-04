@@ -8,4 +8,5 @@ interface RepoRepository {
     suspend fun listFavoriteRepositories(): Flow<List<Repo>>
     suspend fun save(repo: Repo)
     suspend fun getCount(): Flow<Int>
+    suspend fun delete(repo: Repo)
 }

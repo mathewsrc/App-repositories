@@ -31,4 +31,8 @@ class RepoRepositoryImpl(private val service: GitHubService, private val appData
     override suspend fun getCount(): Flow<Int> {
         return appDatabase.repoDao().getCount()
     }
+
+    override suspend fun delete(repo: Repo) {
+        appDatabase.repoDao().delete(repo)
+    }
 }
